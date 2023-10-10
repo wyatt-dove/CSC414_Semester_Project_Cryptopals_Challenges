@@ -2,6 +2,7 @@
 
 ### Introduction
 This is a program that explores the Cryptopals Cryptography Challenges in C++, which can be found here: https://cryptopals.com
+
 This repository is managed by Wyatt Dove (wyatt-dove), Daphney Davis (NefertariCooks), Jordan Livingston, Kristopher Gavin (Wolfire35), and Cole Brady (Cole-Brady).
 
 **Current Progress: Set 1, Challenges 1-8 Complete**
