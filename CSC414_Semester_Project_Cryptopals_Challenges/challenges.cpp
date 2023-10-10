@@ -15,7 +15,24 @@ void challenge1()
 //logic for challenge 2: Fixed XOR (cole brady)
 void challenge2()
 {
+    string hex1 = "1c0111001f010100061a024b53535009181c";
+    string hex2 = "686974207468652062756c6c277320657965";
 
+    //decode buffers
+    vector<unsigned char> byte1 = hexDecode(hex1);
+    vector<unsigned char> byte2 = hexDecode(hex2);
+
+    //XOR both buffers
+    vector<unsigned char> xorResult = fixedXOR(byte1, byte2);
+
+    //encode XOR Result
+    string output = hexEncode(xorResult);
+
+    //display output
+    cout << "\nChallenge 2: Fixed XOR" << endl << endl;
+    cout << "Hex string #1: " << hex1 << endl;
+    cout << "Hex string #2: " << hex2 << endl;
+    cout << "The XOR Result of the two buffers is: " << output << endl;
 }
 
 //logic for challenge 3: Single-byte XOR cipher (wyatt dove)
@@ -137,5 +154,56 @@ void challenge7()
 //logic for challenge 8: Detect AES in ECB Mode (cole brady and jordan livingston)
 void challenge8()
 {
+    //read input from input file
+    ifstream inFile;
+    inFile.open("cryptopals.com_static_challenge-data_8.txt");
+    if (!inFile.is_open())
+    {
+        cout << "Error opening input file. Ensure it is in the correct directory." << endl;
+        return;
+    }
 
+    //start testing each line for ECB encryption
+    string line = "";
+    string encLine = "";
+    int currLine = 1;           //tracks current line
+    int lineFound = 0;          //tracks line where ECB encryption is found
+    bool detectedECB = false;   //flagged true when ECB encryption is found
+    vector<unsigned char> bytes;
+
+    //loop through the lines in the file until one is found with ECB encryption patterns
+    while (detectedECB == false)
+    {
+        //get a line and hex decode it into bytes
+        getline(inFile, line);
+        bytes = hexDecode(line);
+
+        //test if it has ECB encryption patterns
+        //Note from challenge: "Remember that the problem with ECB is that it is stateless and deterministic; 
+        //the same 16 byte plaintext block will always produce the same 16 byte ciphertext."
+        //meaning we just need to find the string that has duplicate 16 byte blocks
+        if (isECB(bytes))
+        {
+            lineFound = currLine;
+            encLine = line;
+            detectedECB = true;
+        }
+
+        currLine++;
+
+    }
+
+    inFile.close();
+
+    cout << "Challenge 8: Detect AES in ECB" << endl;
+    if (detectedECB == true)
+    {
+        cout << "\nECB Detected!" << endl;
+        cout << "Duplicate blocks of ciphertext located in line: " << lineFound << endl;
+        cout << "ECB-Encrypted ciphertext: " << encLine;
+    }
+    else
+    {
+        cout << "Could not detect an ECB-encrypted line in the input file" << endl;
+    }
 }
