@@ -90,7 +90,7 @@ void challenge4()
     if (!inFile.is_open())
     {
         cout << "Error opening .txt file. Make sure it's in the same directory as this .cpp file." << endl;
-        return -1;
+        return;
     }
 
     //variables for testing, similar implementation as challenge 3
@@ -150,7 +150,6 @@ void challenge4()
     cout << "Detected at line: " << lineFound << endl;              //line number
     cout << "Encrypted Message: " << bestEnglish << endl;           //the decrypted message
     cout << "Cipher Key: " << key << endl;                          //key used for encryption
-    return 0;
 }
 
 //logic for challenge 5: Implement Repeating-key XOR (daphney davis)
@@ -202,6 +201,7 @@ void challenge5()
     cout << "\nRepeating-key Cipher: " << key << endl;
     cout << "\nEncrypted Hex String: " << endl << hexOutput << endl;
 }
+
 //logic for challenge 6: Break Repeating-key XOR (kristopher gavin and daphney davis)
 void challenge6()
 {
@@ -211,7 +211,7 @@ void challenge6()
     if (!inFile.is_open())
     {
         cout << "Error opening input file. Ensure it is in the correct directory." << endl;
-        return -1;
+        return;
     }
     //get input from file
     string base64Text = "";
@@ -336,7 +336,6 @@ void challenge6()
     cout << "Decrpyted message is long. Press enter to display it." << endl;
     cin.get();
     cout << output;
-    return 0;
 }
 
 //logic for challenge 7: AES in ECB Mode (wyatt dove)
