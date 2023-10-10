@@ -86,7 +86,52 @@ void challenge6()
 //logic for challenge 7: AES in ECB Mode (wyatt dove)
 void challenge7()
 {
+    //read input data from the file
+    ifstream inFile;
+    inFile.open("cryptopals.com_static_challenge-data_7.txt");
+    if (!inFile.is_open())
+    {
+        cout << "Error reading file." << endl;
+        return;
+    }
 
+    string line;
+    string inText;
+    while (getline(inFile, line))
+    {
+        inText += line;
+    }
+    inFile.close();
+
+    //base 64 decode the input
+    vector<unsigned char> cipherText = b64Decode(inText);
+    //size of the input
+    unsigned int enLen = cipherText.size();
+
+    //allocate space for the decrypted text (should be equal to the encrypted text size)
+    vector<unsigned char> decryptedText;
+    decryptedText.resize(enLen);
+    unsigned int lenDec = decryptedText.size();
+
+    //decrypt
+    //will need the cipher text, decrypted text output vector, length of both, and the KEY given by the challenge
+    aes_ecbDecrypt(cipherText, enLen, decryptedText, lenDec, CH7_KEY);
+
+    //update length if needed
+    lenDec = decryptedText.size();
+
+    //store the output in a string for easy output
+    string output;
+    for (int i = 0; i < lenDec; i++)
+    {
+        output += decryptedText[i];
+    }
+
+    cout << "\nChallenge 7: AES in ECB Mode" << endl << endl;
+    cout << "Given AES Key: YELLOW SUBMARINE" << endl << endl;
+    cout << "Decrypted output is long. Press enter to display." << endl;
+    cin.get();
+    cout << output;
 }
 
 //logic for challenge 8: Detect AES in ECB Mode (cole brady and jordan livingston)
