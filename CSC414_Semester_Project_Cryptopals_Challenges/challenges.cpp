@@ -91,21 +91,6 @@ void challenge4()
 //logic for challenge 5: Implement Repeating-key XOR (daphney davis)
 void challenge5()
 {
-// Challenge 5: Implement Repeating-Key XOR
-
-#include <iostream>
-#include <vector>
-
-using namespace std;
-
-//hex encoder
-string hexEncode(vector<unsigned char>);
-
-//hex characters
-const char* HEX = "0123456789abcdef";
-
-int main()
-{
     //given string and repeating xor key
     string asciiInput = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal";
     string key = "ICE";
@@ -116,7 +101,7 @@ int main()
     {
         bytes.push_back(asciiInput[i]);
     }
- 
+
     //variables for repeating key encryption
     vector<unsigned char> output;       //store the output
     unsigned int position = 0;          //keep track of position in the repeating key "ICE"
@@ -152,36 +137,6 @@ int main()
     cout << "\nInput String: " << endl << asciiInput << endl;
     cout << "\nRepeating-key Cipher: " << key << endl;
     cout << "\nEncrypted Hex String: " << endl << hexOutput << endl;
-
-    return 0;
-}
-
-//hex encoder
-string hexEncode(vector<unsigned char> inBytes)
-{
-    //string to hold the hex output
-    string hexOutput = "";
-
-    //loop through the raw bytes
-    for (int i = 0; i < inBytes.size(); i++)
-    {
-        //one byte contains two hex digits, so slice off a byte
-        unsigned char oneByte = inBytes[i];
-
-        //shift rigt 4 to isolate the first 4 bits
-        unsigned char hex1 = HEX[(oneByte >> 4)];
-
-        //AND with 0x0f (00001111) to isolate the last 4 bits
-        unsigned char hex2 = HEX[(oneByte & 0x0f)];
-
-        //push both characters to the back of the output string
-        hexOutput.push_back(hex1);
-        hexOutput.push_back(hex2);
-    }
-
-    return hexOutput;
-}
-
 }
 
 //logic for challenge 6: Break Repeating-key XOR (kristopher gavin and daphney davis)
