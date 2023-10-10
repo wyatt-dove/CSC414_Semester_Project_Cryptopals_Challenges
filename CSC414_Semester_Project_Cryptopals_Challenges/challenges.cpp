@@ -91,6 +91,96 @@ void challenge4()
 //logic for challenge 5: Implement Repeating-key XOR (daphney davis)
 void challenge5()
 {
+// Challenge 5: Implement Repeating-Key XOR
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//hex encoder
+string hexEncode(vector<unsigned char>);
+
+//hex characters
+const char* HEX = "0123456789abcdef";
+
+int main()
+{
+    //given string and repeating xor key
+    string asciiInput = "Burning 'em, if you ain't quick and nimble\nI go crazy when I hear a cymbal";
+    string key = "ICE";
+
+    //input string is ascii, so just put all the characters in a vector to store the bytes -- no decoding needed
+    vector <unsigned char> bytes;
+    for (int i = 0; i < asciiInput.length(); i++)
+    {
+        bytes.push_back(asciiInput[i]);
+    }
+ 
+    //variables for repeating key encryption
+    vector<unsigned char> output;       //store the output
+    unsigned int position = 0;          //keep track of position in the repeating key "ICE"
+    unsigned int size = bytes.size();   //size of the input
+    //sequentially loop through the byte vector, encoding each byte sequentially with a character in the key
+    for (unsigned int i = 0; i < size; i++)
+    {
+        //byte of the input
+        unsigned char byte1 = bytes[i];
+        //byte of the key
+        unsigned char byte2 = key[position];
+        //XOR them together
+        unsigned char xorByte = (byte1 ^ byte2);
+        //push result to the back of output vector
+        output.push_back(xorByte);
+
+        //update position in key as needed
+        if (position == (key.length() - 1)) //if position is at the last index, reset to 0
+        {
+            position = 0;
+        }
+        else                                //else just increment position
+        {
+            position++;
+        }
+    }
+
+    //hex encode the output bytes
+    string hexOutput = hexEncode(output);
+
+    //output the resulting string
+    cout << "Challenge 5: Implement Repeating-Key XOR" << endl;
+    cout << "\nInput String: " << endl << asciiInput << endl;
+    cout << "\nRepeating-key Cipher: " << key << endl;
+    cout << "\nEncrypted Hex String: " << endl << hexOutput << endl;
+
+    return 0;
+}
+
+//hex encoder
+string hexEncode(vector<unsigned char> inBytes)
+{
+    //string to hold the hex output
+    string hexOutput = "";
+
+    //loop through the raw bytes
+    for (int i = 0; i < inBytes.size(); i++)
+    {
+        //one byte contains two hex digits, so slice off a byte
+        unsigned char oneByte = inBytes[i];
+
+        //shift rigt 4 to isolate the first 4 bits
+        unsigned char hex1 = HEX[(oneByte >> 4)];
+
+        //AND with 0x0f (00001111) to isolate the last 4 bits
+        unsigned char hex2 = HEX[(oneByte & 0x0f)];
+
+        //push both characters to the back of the output string
+        hexOutput.push_back(hex1);
+        hexOutput.push_back(hex2);
+    }
+
+    return hexOutput;
+}
 
 }
 
