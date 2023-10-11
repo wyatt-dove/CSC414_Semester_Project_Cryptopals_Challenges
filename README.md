@@ -20,4 +20,7 @@ This program currently solves the following challenges:
 
 It navigates these solutions through the console via a text-based menu.
 
+The individual challenges' code can be viewed in the challenges.cpp file.
+The functions used in each challenge can be viewed in the crypto_tools.cpp file.
+
 This program was coded and compiled using Visual Studio Community 2022. External libraries used include various Cryptography libraries from OpenSSL v1.1.1.
